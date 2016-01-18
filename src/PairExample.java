@@ -16,7 +16,7 @@ class NodeT implements Comparable<NodeT>{
 	}
 }
 
-public class Test {
+public class PairExample {
 	
 	static int r, c;
 	static int[] dx = {1,-1,0,0};

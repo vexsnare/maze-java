@@ -3,34 +3,34 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.HashSet;
 import java.util.StringTokenizer;
 
-
-public class zzynga {
-	static int mod = (int)1e9 + 7;
-	
+public class CFEdu5A {
 	public static void main(String[] args) {
-		
-		Set<Intger> s = new HashSet<>();
-		
+			String a = in.nextLine();
+			String b = in.nextLine();
+			int i = 0;
+			while(a.charAt(i) == '0' && i < a.length()-1) i++;
+			a = a.substring(i);
+			i = 0;
+			while(b.charAt(i) == '0' && i < b.length()-1) i++;
+			b = b.substring(i);
+			if(a.length() > b.length()) {
+				out.println(">");
+			} else if(a.length() < b.length()) {
+				out.println("<");
+			} else {
+				for(i = 0; i < a.length(); i++) {
+					if(a.charAt(i) != b.charAt(i)) break;
+				}
+				if(i == a.length()) {
+					out.println("=");
+				} else {
+					out.println(a.charAt(i) > b.charAt(i) ? ">" : "<");
+				}
+			}
+			out.close();
 	}
-	
-	static long pow(int n, int p, int mod) {
-		if(p == 0) return 1;
-		long ans = pow(n, p/2, mod);
-		ans = (ans * ans)%mod;
-		if(p % 2 != 0) {
-			ans = (ans * n)%mod;
-		}
-		return ans;
-	}
-	static long gcd(long a, long b ) {
-		if(a == 0) return b;
-		return gcd(b%a,a);
-	}
-
-
 	//------------ fast input/ouput--------//
 	
 	public static Object returnFirst(Object x, Object y) {
@@ -83,4 +83,3 @@ public class zzynga {
 	} //--fast i/o ends here----//
 	
 }
-

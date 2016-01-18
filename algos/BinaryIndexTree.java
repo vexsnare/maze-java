@@ -5,23 +5,52 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.StringTokenizer;
 
-
+class BIT {
+	int[] bit;
+	int getNextIndex(int n) {
+		return n + (n & -n);
+	}
+	int getParentIndex(int n) {
+		return n - (n & -n);
+	}
+	void updateBit(int pos, int value) {
+		while(pos < bit.length) {
+			bit[pos] += value;
+			pos = getNextIndex(pos);
+		}
+	}
+	// constructor to create Binary Indexed tree - an array of size+1
+	BIT(int[] ar) {
+		bit = new int[ar.length+1];
+		for(int i = 0; i < ar.length; i++) {
+			updateBit(i+1, ar[i]);
+		}
+	}
+	public int getSumUpToIndex(int index) {
+		index += 1;
+		int sum = 0;
+		while (index > 0) {
+			sum += bit[index];
+			index = getParentIndex(index);
+		}
+		return sum;
+	}
+	void updateArray(int index, int diff) {
+		updateBit(index+1, diff);
+	}
+}
 public class BinaryIndexTree {
 	public static void main(String[] args) {
-		String[] s = in.nextLine().split(" ");
-		int n = Integer.parseInt(s[0]);
-		String t = s[2];
-		int ans = 0;
-		if(t.equals("week")) ans = 52 + (n <= 2 ? 1 : 0);
-		else if(t.equals("month")) {
-			if(n <= 29) ans = 12;
-			else if(n == 30) ans = 11;
-			else ans = 6;
-		}
-		out.println(ans);
-		out.close();
-		
-		
+		int ar[] = {1,2,3,4,5,6,7};
+		BIT bt = new BIT(ar);
+		assert 1 == bt.getSumUpToIndex(0);
+		assert 3 == bt.getSumUpToIndex(1);
+		assert 6 == bt.getSumUpToIndex(2);
+		assert 10 == bt.getSumUpToIndex(3);
+		assert 15 == bt.getSumUpToIndex(4);
+		assert 21 == bt.getSumUpToIndex(5);
+		//System.out.println(bt.getSumUpToIndex(6));
+		assert 28 == bt.getSumUpToIndex(6): "Matching Error";
 	}
 	// --------------- ------fast input/ouput---------------------------///
 	

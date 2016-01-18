@@ -3,38 +3,55 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.HashSet;
 import java.util.StringTokenizer;
 
+/**
+ * CodeForces : 338
+ * 
+ * @author vinaysaini E. Hexagons
+ */
+public class cf338e {
 
-public class zzynga {
-	static int mod = (int)1e9 + 7;
-	
+	static int dx[] = { 1, -1, -2, -1, 1, 2, 1 };
+	static int dy[] = { 2, 2, 0, -2, -2, 0, 2 };
+
 	public static void main(String[] args) {
-		
-		Set<Intger> s = new HashSet<>();
-		
-	}
-	
-	static long pow(int n, int p, int mod) {
-		if(p == 0) return 1;
-		long ans = pow(n, p/2, mod);
-		ans = (ans * ans)%mod;
-		if(p % 2 != 0) {
-			ans = (ans * n)%mod;
+		long x = 0, y = 0;
+
+		long n = in.nextLong();
+		long ringNumber = getRing(n);
+		long stepsUpTo = 3 * ringNumber * ringNumber + 3 * ringNumber;
+		x = 2 * ringNumber;
+		long remainingSteps = n - stepsUpTo;
+		if (remainingSteps > 0) {
+			x = x + dx[0];
+			y = y + dy[0];
+			remainingSteps--;
 		}
-		return ans;
-	}
-	static long gcd(long a, long b ) {
-		if(a == 0) return b;
-		return gcd(b%a,a);
+		for(int i = 1; i <= 6 && remainingSteps > 0; i++) {
+			long r = (i == 1 || i == 6 ? ringNumber: ringNumber+1);
+			long move = r > remainingSteps ? remainingSteps: r;
+			x += dx[i]*move;
+			y += dy[i]*move;
+			remainingSteps -= move;
+		}
+
+		out.println(x + " " + y);
+		out.close();
 	}
 
-
-	//------------ fast input/ouput--------//
-	
-	public static Object returnFirst(Object x, Object y) {
-		return x;
+	static long getRing(long n) {
+		long l = 0;
+		long r = (long) 1e9;
+		while (l < r) {
+			long m = (l + r) / 2;
+			long sum = 3 * m * m + 3 * m;
+			if (n < sum) {
+				r = m;
+			} else
+				l = m + 1;
+		}
+		return l - 1;
 	}
 
 	public static PrintWriter out = new PrintWriter(new BufferedOutputStream(System.out));
@@ -80,7 +97,6 @@ public class zzynga {
 			}
 			return str;
 		}
-	} //--fast i/o ends here----//
-	
-}
+	} // --fast i/o ends here----//
 
+}

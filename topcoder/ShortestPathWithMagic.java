@@ -5,20 +5,17 @@ import java.math.*;
 /*
  *      Single Round Match 675 Round 1 - Division II, Level Two
  */
-class Node implements Comparable<Node> {
+class Touple implements Comparable<Touple> {
 	int value;
-	double dist;
+	int dist;
 	int portion;
 
-	Node(int v, double d, int p) {
+	Touple(int v, int d, int p) {
 		this.value = v;
 		this.dist = d;
 		this.portion = p;
 	}
-
-	@Override
-	public int compareTo(Node o) {
-		// TODO Auto-generated method stub
+	public int compareTo(Touple o) {
 		return this.dist < o.dist ? -1 : 1;
 	}
 
@@ -36,27 +33,24 @@ public class ShortestPathWithMagic {
 		r = dist.length;
 		c = dist[0].length();
 		int[] visited = new int[r];
-		PriorityQueue<Node> pq = new PriorityQueue<>();
-		pq.add(new Node(0, 0.0, k));
+		PriorityQueue<Touple> pq = new PriorityQueue<>();
+		pq.add(new Touple(0, 0, k));
 		double result = 0.0;
 		while(!pq.isEmpty()) {
-			Node current = pq.remove();
-			System.out.println("current = " + current.value+ ", "+ current.dist + ", "+current.portion);
+			Touple current = pq.remove();
 			if(current.value == 1) {
 				result = current.dist;
 				break;
 			}
-			if(visited[current.value] == 1) continue;
 			visited[current.value] = 1;
 			for(int i = 0; i < r; i++) {
-				if(i != current.value) {
-					pq.add(new Node(i, current.dist + dist[current.value].charAt(i)-'0',k));
-					if(current.portion>0)pq.add(new Node(i, current.dist + (1.0*(dist[current.value].charAt(i)-'0'))/2,k-1));
+				if(i != current.value && visited[i] == 0) {
+					pq.add(new Touple(i, current.dist + 2*(dist[current.value].charAt(i)-'0'), k));
+					if(current.portion>0)pq.add(new Touple(i, current.dist + (dist[current.value].charAt(i)-'0'), k-1));
 				}
 			}
 		}
-	
-		return result;
+		return result/2.0;
 	}
 
 	// BEGIN KAWIGIEDIT TESTING
@@ -112,9 +106,9 @@ public class ShortestPathWithMagic {
 		double p2;
 
 		// ----- test 0 -----
-		p0 = new String[] { "094", "904", "440" };
+		p0 = new String[] { "0919", "9091", "1904", "9140" };
 		p1 = 1;
-		p2 = 4.5D;
+		p2 = 4.0D;
 		all_right = KawigiEdit_RunTest(0, p0, p1, true, p2) && all_right;
 		// ------------------
 

@@ -3,38 +3,46 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.TreeSet;
 
-
-public class zzynga {
-	static int mod = (int)1e9 + 7;
-	
+public class cf338B {
 	public static void main(String[] args) {
-		
-		Set<Intger> s = new HashSet<>();
-		
-	}
-	
-	static long pow(int n, int p, int mod) {
-		if(p == 0) return 1;
-		long ans = pow(n, p/2, mod);
-		ans = (ans * ans)%mod;
-		if(p % 2 != 0) {
-			ans = (ans * n)%mod;
+		int n = in.nextInt();
+		int m = in.nextInt();
+		int [] ln = new int[n];
+		int [] ou = new int[n];
+		int u, v;
+		ArrayList<ArrayList<Integer>> ar = new ArrayList<ArrayList<Integer>>(n);
+		for(int i = 0; i < n; i++) ar.add(new ArrayList<>());
+		for(int i = 0; i < m; i++) {
+			u = in.nextInt();
+			v = in.nextInt();
+			ar.get(u-1).add(v-1);
+			ar.get(v-1).add(u-1);
+			ou[u-1]++;
+			ou[v-1]++;
 		}
-		return ans;
-	}
-	static long gcd(long a, long b ) {
-		if(a == 0) return b;
-		return gcd(b%a,a);
-	}
-
-
-	//------------ fast input/ouput--------//
-	
-	public static Object returnFirst(Object x, Object y) {
-		return x;
+		for(int i = 0; i < n; i++) {
+			for(int j = 0; j < ar.get(i).size(); j++) {
+				int x = ar.get(i).get(j);
+				if(x < i) {
+					ln[i] = Math.max(ln[x] + 1, ln[i]);
+				}
+			}
+		}
+		long ans = -1;
+		for(int i = 0; i < n; i++) {
+			ans = Math.max(ans, (long)ou[i]*(ln[i]+1));
+		}
+		out.println(ans);
+		out.close();
 	}
 
 	public static PrintWriter out = new PrintWriter(new BufferedOutputStream(System.out));
@@ -80,7 +88,6 @@ public class zzynga {
 			}
 			return str;
 		}
-	} //--fast i/o ends here----//
-	
-}
+	} // --fast i/o ends here----//
 
+}
