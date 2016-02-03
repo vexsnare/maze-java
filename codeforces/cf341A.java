@@ -3,35 +3,31 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
-
-public class zzynga {
-	static int mod = (int)1e9 + 7;
-	
+public class cf341A {
 	public static void main(String[] args) {
-		
-	}
-	
-	static long pow(int n, int p, int mod) {
-		if(p == 0) return 1;
-		long ans = pow(n, p/2, mod);
-		ans = (ans * ans)%mod;
-		if(p % 2 != 0) {
-			ans = (ans * n)%mod;
+		int n;
+		long ans = 0;
+		n = in.nextInt();
+		int minOdd = Integer.MAX_VALUE;
+		for (int i = 0; i < n; i++) {
+			int x = in.nextInt();
+			ans += x;
+			if(x%2 == 1) {
+				minOdd = Math.min(minOdd, x);
+			}
 		}
-		return ans;
-	}
-	static long gcd(long a, long b ) {
-		if(a == 0) return b;
-		return gcd(b%a,a);
+		if (ans % 2 != 0) {
+			ans -= minOdd;
+		}
+		out.println(ans);
+		out.close();
 	}
 
+	// --------------- ------fast input/ouput---------------------------///
 
-	//------------ fast input/ouput--------//
-	
 	public static Object returnFirst(Object x, Object y) {
 		return x;
 	}
@@ -79,7 +75,8 @@ public class zzynga {
 			}
 			return str;
 		}
-	} //--fast i/o ends here----//
-	
-}
+	}
 
+	// -----------------------------fast i/o ends
+	// here-------------------------//
+}

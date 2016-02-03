@@ -3,35 +3,50 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
-
-public class zzynga {
-	static int mod = (int)1e9 + 7;
-	
+public class cf341B {
+	static int max = 1000;
 	public static void main(String[] args) {
-		
-	}
-	
-	static long pow(int n, int p, int mod) {
-		if(p == 0) return 1;
-		long ans = pow(n, p/2, mod);
-		ans = (ans * ans)%mod;
-		if(p % 2 != 0) {
-			ans = (ans * n)%mod;
+		int n;
+		n = in.nextInt();
+		boolean [][]ar = new boolean[1000][1000];
+		long ans = 0;
+		for(int i = 0; i < n; i++) {
+			int x = in.nextInt();
+			int y = in.nextInt();
+			ar[x-1][y-1] = true;
 		}
-		return ans;
+		int [][] A = new int[max][max];
+		int [][] B = new int[max][max];
+		for(int i = max-1; i >= 0; i--) {
+			for(int j = max-1; j >= 0; j--) {
+				if(inRange(i+1, j+1)) {
+					A[i][j] = A[i+1][j+1] + (ar[i][j] ? 1 : 0);
+				} else A[i][j] = (ar[i][j] ? 1 : 0);
+				if(inRange(i+1, j-1)) {
+					B[i][j] = B[i+1][j-1] + (ar[i][j] ? 1 : 0);
+				} else B[i][j] = (ar[i][j] ? 1 : 0);
+			}
+		}
+		for(int i = 0; i < max; i++) {
+			for(int j = 0; j < max; j++) {
+				if(ar[i][j]) {
+					ans += A[i][j] + B[i][j] -2;
+				}
+			}
+		}
+		out.println(ans);
+		out.close();
 	}
-	static long gcd(long a, long b ) {
-		if(a == 0) return b;
-		return gcd(b%a,a);
-	}
-
-
-	//------------ fast input/ouput--------//
 	
+	static boolean inRange(int i, int j) {
+		return i >= 0 && j >= 0 && i < max && j < max;
+	}
+
+	// --------------- ------fast input/ouput---------------------------///
+
 	public static Object returnFirst(Object x, Object y) {
 		return x;
 	}
@@ -79,7 +94,8 @@ public class zzynga {
 			}
 			return str;
 		}
-	} //--fast i/o ends here----//
-	
-}
+	}
 
+	// -----------------------------fast i/o ends
+	// here-------------------------//
+}

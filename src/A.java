@@ -6,9 +6,10 @@ import java.io.PrintWriter;
 import java.util.StringTokenizer;
 
 
-public class Bfs {
+public class A {
+	
 	public static void main(String[] args) {
-		int[][] ar = new int[2][5];
+		
 	}
 	
 	

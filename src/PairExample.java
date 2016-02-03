@@ -1,23 +1,39 @@
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
-class NodeT implements Comparable<NodeT>{
-	int x, y;
-	NodeT(int x, int y) {
-		this.x = x;
-		this.y = y;
-	}
-	@Override
-	public int compareTo(NodeT o) {
-		return this.x - o.x;
-	}
-	public String toString() {
-		return "{"+this.x+","+this.y+"}";
-	}
-}
+
 
 public class PairExample {
 	
+	class NodeT implements Comparable<NodeT>{
+		int x, y;
+		NodeT(int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
+		@Override
+		public int compareTo(NodeT o) {
+			return this.x - o.x;
+		}
+		public String toString() {
+			return "{"+this.x+","+this.y+"}";
+		}
+	}
+	
+	class PairT implements Comparable<PairT>{
+		int x, y;
+		PairT(int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
+		@Override
+		public int compareTo(PairT o) {
+			return this.x - o.x;
+		}
+		public String toString() {
+			return "{"+this.x+","+this.y+"}";
+		}
+	}
 	static int r, c;
 	static int[] dx = {1,-1,0,0};
 	static int[] dy = {0,0,1,-1};
@@ -27,9 +43,6 @@ public class PairExample {
 	
 	public static void main(String[] args) {
 		PriorityQueue<NodeT> pq = new PriorityQueue<NodeT>();
-		pq.add(new NodeT(3,4));
-		pq.add(new NodeT(5,6));
-		pq.add(new NodeT(11,2));
 		while(!pq.isEmpty()) {
 			System.out.println(pq.remove());
 		}
@@ -79,20 +92,5 @@ class comparator implements Comparator<VertexT> {
 	public int compare(VertexT o1, VertexT o2) {
 		// TODO Auto-generated method stub
 		return o1.x - o2.x;
-	}
-}
-
-class PairT implements Comparable<PairT>{
-	int x, y;
-	PairT(int x, int y) {
-		this.x = x;
-		this.y = y;
-	}
-	@Override
-	public int compareTo(PairT o) {
-		return this.x - o.x;
-	}
-	public String toString() {
-		return "{"+this.x+","+this.y+"}";
 	}
 }

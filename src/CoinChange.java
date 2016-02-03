@@ -3,35 +3,53 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.StringTokenizer;
 
+public class CoinChange {
 
-public class zzynga {
-	static int mod = (int)1e9 + 7;
-	
+	static int[] coins;
+
 	public static void main(String[] args) {
-		
-	}
-	
-	static long pow(int n, int p, int mod) {
-		if(p == 0) return 1;
-		long ans = pow(n, p/2, mod);
-		ans = (ans * ans)%mod;
-		if(p % 2 != 0) {
-			ans = (ans * n)%mod;
+		int amount = in.nextInt();
+		int n = in.nextInt();
+		coins = new int[n];
+		for (int i = 0; i < n; i++) {
+			coins[i] = in.nextInt();
 		}
-		return ans;
-	}
-	static long gcd(long a, long b ) {
-		if(a == 0) return b;
-		return gcd(b%a,a);
+		System.out.println(solve(amount, 0));
+		System.out.println(solve2(amount));
 	}
 
+	static int solve(int amount, int i) {
+		if (amount == 0)
+			return 1;
+		int count = 0;
+		if (coins[i] <= amount) {
+			count += solve(amount - coins[i], i);
+		}
+		if (i + 1 < coins.length)
+			count += solve(amount, i + 1);
+		return count;
+	}
 
-	//------------ fast input/ouput--------//
+	static int solve2(int amount) {
+		int n = coins.length;
 	
+		int[][] ar = new int[n][amount + 1];
+		for(int i = 0; i < n; i++) ar[i][0] = 1;
+		for (int i = 0; i < n; i++) {
+			for (int j = 1; j <= amount; j++) {
+				if (i - 1 >= 0)
+					ar[i][j] += ar[i-1][j];
+				if (j >= coins[i])
+					ar[i][j] += ar[i][j - coins[i]];
+			}
+		}
+		return ar[n-1][amount];
+	}
+
+	// --------------- ------fast input/ouput---------------------------///
+
 	public static Object returnFirst(Object x, Object y) {
 		return x;
 	}
@@ -79,7 +97,8 @@ public class zzynga {
 			}
 			return str;
 		}
-	} //--fast i/o ends here----//
-	
-}
+	}
 
+	// -----------------------------fast i/o ends
+	// here-------------------------//
+}
